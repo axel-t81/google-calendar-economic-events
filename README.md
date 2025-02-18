@@ -1,10 +1,12 @@
 # google-calendar-economic-events
 
 ### Description
-**__version 1__** 
+**_version 1_** 
+
 An app that collects economic calendar events via APIs, loads them into an embedded Google Calendar, and allows visitors to download/access the public calendar.
 
-**__version 2__** 
+**_version 2_** 
+
 After difficulty finding a free API for an Economic Calendar, the project has pivoted to Earnings Calendar applications. The same concept holds, but the app now pulls earnings announcements rather than economic data announcements.
 
 ### Current Goal
