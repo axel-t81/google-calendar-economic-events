@@ -4,7 +4,7 @@
 # * But this CSV data is 9000+ rows long
 # * So need to work out a way to curate this
 # * Then this curated data needs to sent to an ICS file
-# * And the user will need to collect all of them, or have a way to select which ones they want
+# * ANd the user will need to collect all of them, or have a way to select which ones they want
 # * This process needs to be repeated, whenever a user accesses the script; on demand.
 
 import requests
@@ -23,11 +23,16 @@ ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
+my_list = []
+
 with requests.Session() as phone:
     download = phone.get(csv_url)
     print(type(download))
-    print(download.text)
     decoded_content = download.content.decode('utf-8')
-    print(type(decoded_content))
-    # data = csv.DictReader(decoded_content.splitlines(), delimiter=',')
-    # data = csv.DictReader(open(decoded_content))
+    cr = csv.reader(decoded_content.splitlines(), delimiter=',')
+    print(type(cr))
+    my_list = list(cr) # This works in putting all data in a List
+    print(my_list) # And you can print out this massive list
+    my_dict = dict(cr) # I tried to replicate this ...but with a Dictionary
+    print(type(my_dict)) 
+    print(my_dict) # But nothing is appended to the dictionary
