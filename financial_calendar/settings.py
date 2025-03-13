@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     
     # Local apps
     'core.apps.CoreConfig',
-    'users.apps.UsersConfig',
     'integrations.apps.IntegrationsConfig',
 ]
 
@@ -135,11 +134,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Authentication settings
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
-LOGIN_URL = 'login'
 
 # API Keys
 ALPHA_VANTAGE_API_KEY = os.getenv('ALPHA_VANTAGE_API_KEY')

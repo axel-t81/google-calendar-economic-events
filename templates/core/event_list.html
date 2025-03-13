@@ -1,16 +1,240 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Economic Events</title>
-</head>
-<body>
-    <h1>Economic Events</h1>
-    <ul>
+{% extends 'base.html' %}
+
+{% block title %}Earnings Events | Earnings Calendar{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1 class="display-5 mb-3">Earnings Events</h1>
+        <p class="lead">View upcoming earnings reports and sync them to your Google Calendar.</p>
+    </div>
+    <div class="col-md-4 text-md-end d-flex align-items-center justify-content-md-end gap-2">
+        <button class="btn btn-danger" id="clearEvents">
+            <i class="fas fa-trash-alt me-2"></i>Clear Events
+        </button>
+        <button class="btn btn-primary" id="refreshEvents">
+            <i class="fas fa-sync-alt me-2"></i>Refresh Events
+        </button>
+    </div>
+</div>
+
+<!-- Feedback Message Area -->
+<div class="row mb-4 {% if not success_message and not error_message %}d-none{% endif %}" id="feedbackArea">
+    <div class="col-12">
+        <div class="alert alert-dismissible fade show {% if success_message %}alert-success{% elif error_message %}alert-danger{% endif %}" role="alert">
+            <span id="feedbackMessage">{% if success_message %}{{ success_message }}{% elif error_message %}{{ error_message }}{% endif %}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Filter Events</h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="companyFilter" class="form-label">Company</label>
+                        <select class="form-select" id="companyFilter">
+                            <option value="">All Companies</option>
+                            <!-- Will be populated with JavaScript -->
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="dateFilter" class="form-label">Date Range</label>
+                        <select class="form-select" id="dateFilter">
+                            <option value="all">All Dates</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="searchFilter" class="form-label">Search</label>
+                        <input type="text" class="form-control" id="searchFilter" placeholder="Search events...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="eventsContainer">
+    {% if events %}
         {% for event in events %}
-            <li>{{ event.name }} on {{ event.date }} - {{ event.description }}</li>
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 event-card" data-company="{{ event.company }}">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary">{{ event.company }}</span>
+                    <small class="text-muted">{{ event.date|date:"M d, Y" }}</small>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.name }}</h5>
+                    <p class="card-text">{{ event.description|default:"No description available." }}</p>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-between">
+                    <small class="text-muted">Source: {{ event.source }}</small>
+                    <div class="form-check">
+                        <input class="form-check-input event-select" type="checkbox" value="{{ event.id }}" id="event{{ event.id }}">
+                        <label class="form-check-label" for="event{{ event.id }}">
+                            Select
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-</body>
-</html> 
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>No earnings events found. Click "Refresh Events" to fetch the latest data.
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% if events %}
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <button class="btn btn-success" id="syncSelectedEvents">
+            <i class="fas fa-calendar-plus me-2"></i>Sync Selected Events to Google Calendar
+        </button>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-hide feedback message after 5 seconds
+        const feedbackArea = document.getElementById('feedbackArea');
+        if (feedbackArea.style.display === 'block') {
+            setTimeout(() => {
+                feedbackArea.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Populate company filter
+        const companies = new Set();
+        document.querySelectorAll('.event-card').forEach(card => {
+            companies.add(card.dataset.company);
+        });
+        
+        const companyFilter = document.getElementById('companyFilter');
+        companies.forEach(company => {
+            const option = document.createElement('option');
+            option.value = company;
+            option.textContent = company;
+            companyFilter.appendChild(option);
+        });
+        
+        // Filter functionality
+        function applyFilters() {
+            const company = companyFilter.value;
+            const dateRange = document.getElementById('dateFilter').value;
+            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
+            
+            document.querySelectorAll('.event-card').forEach(card => {
+                let show = true;
+                
+                // Company filter
+                if (company && card.dataset.company !== company) {
+                    show = false;
+                }
+                
+                // Search filter
+                if (searchTerm) {
+                    const cardText = card.textContent.toLowerCase();
+                    if (!cardText.includes(searchTerm)) {
+                        show = false;
+                    }
+                }
+                
+                // Show/hide card
+                card.closest('.col-md-6').style.display = show ? 'block' : 'none';
+            });
+        }
+        
+        // Event listeners
+        companyFilter.addEventListener('change', applyFilters);
+        document.getElementById('dateFilter').addEventListener('change', applyFilters);
+        document.getElementById('searchFilter').addEventListener('input', applyFilters);
+        
+        // Refresh events button
+        document.getElementById('refreshEvents').addEventListener('click', function() {
+            // Show loading state
+            this.disabled = true;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+            
+            // Fetch events via AJAX
+            fetch('/integrations/fetch-events/', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset button state
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Refresh Events';
+                
+                // Reload the page to show new events
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                // Reset button state
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Refresh Events';
+                console.error('Error:', error);
+            });
+        });
+        
+        // Sync selected events button
+        document.getElementById('syncSelectedEvents').addEventListener('click', function() {
+            const selectedEvents = Array.from(document.querySelectorAll('.event-select:checked')).map(checkbox => checkbox.value);
+            if (selectedEvents.length === 0) {
+                showFeedback('Please select at least one event to sync.', 'info');
+                return;
+            }
+            
+            // This will be implemented later with AJAX
+            showFeedback(`Selected ${selectedEvents.length} events for syncing to Google Calendar.`);
+        });
+        
+        // Clear events button
+        document.getElementById('clearEvents').addEventListener('click', function() {
+            // Show loading state
+            this.disabled = true;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Clearing...';
+            
+            // Clear events via AJAX
+            fetch('/integrations/clear-events/', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset button state
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-trash-alt me-2"></i>Clear Events';
+                
+                // Reload the page to show empty state
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                // Reset button state
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-trash-alt me-2"></i>Clear Events';
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+{% endblock %} 

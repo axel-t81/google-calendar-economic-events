@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Earnings Calendar to Google Calendar{% endblock %}
+
+{% block content %}
+<div class="row align-items-center py-5">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold mb-4">Earnings Calendar to Google Calendar</h1>
+        <p class="lead mb-4">
+            Stay informed about upcoming earnings reports by syncing them directly to your Google Calendar.
+            Never miss an important earnings announcement again!
+        </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a href="{% url 'event_list' %}" class="btn btn-primary btn-lg px-4 me-md-2">
+                <i class="fas fa-calendar-alt me-2"></i>View Earnings Events
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-6 mt-5 mt-lg-0 text-center">
+        <img src="https://via.placeholder.com/600x400?text=Earnings+Calendar" alt="Earnings Calendar" class="img-fluid rounded shadow">
+    </div>
+</div>
+
+<hr class="my-5">
+
+<div class="row py-4">
+    <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold">How It Works</h2>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <div class="mb-3">
+                    <i class="fas fa-sync-alt fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">1. Fetch Events</h3>
+                <p class="card-text">
+                    We fetch the latest earnings events from Alpha Vantage's API, providing you with up-to-date information.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <div class="mb-3">
+                    <i class="fas fa-filter fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">2. Select Events</h3>
+                <p class="card-text">
+                    Browse and filter earnings events by company, date, or keyword. Select the ones you want to track.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <div class="mb-3">
+                    <i class="fas fa-calendar-plus fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">3. Sync to Calendar</h3>
+                <p class="card-text">
+                    With one click, sync your selected events to your Google Calendar and stay informed.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<div class="row py-4">
+    <div class="col-lg-6">
+        <h2 class="display-6 fw-bold mb-4">Why Use Our App?</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-transparent">
+                <i class="fas fa-check-circle text-success me-2"></i>
+                <strong>Stay Informed:</strong> Never miss important earnings announcements
+            </li>
+            <li class="list-group-item bg-transparent">
+                <i class="fas fa-check-circle text-success me-2"></i>
+                <strong>Save Time:</strong> Automatically sync events to your calendar
+            </li>
+            <li class="list-group-item bg-transparent">
+                <i class="fas fa-check-circle text-success me-2"></i>
+                <strong>Customizable:</strong> Choose only the events you care about
+            </li>
+            <li class="list-group-item bg-transparent">
+                <i class="fas fa-check-circle text-success me-2"></i>
+                <strong>Up-to-date:</strong> Powered by Alpha Vantage's reliable data
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-6 mt-5 mt-lg-0">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title h4 mb-4">Get Started Now</h3>
+                <p class="card-text">
+                    Ready to stay on top of earnings announcements? Start by exploring our comprehensive earnings calendar.
+                </p>
+                <a href="{% url 'event_list' %}" class="btn btn-primary">
+                    <i class="fas fa-arrow-right me-2"></i>View Earnings Events
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
