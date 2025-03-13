@@ -1,11 +1,10 @@
-# google-calendar-economic-events
+# earnings-calendar-to-google-calendar
 
-A Django application that fetches Economic Calendar events from an API and syncs them with Google Calendar.
+A Django application that fetches Earnings events from an API and syncs them with Google Calendar.
 
 ## Features
 
-- Fetch Economic Calendar events (earnings, dividends, etc.) from API
-- User authentication and authorization
+- Fetch Earnings events from API
 - Google Calendar integration
 - Customizable event selection
 - Automated calendar syncing
@@ -20,14 +19,14 @@ A Django application that fetches Economic Calendar events from an API and syncs
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/google-calendar-economic-events.git
-cd google-calendar-economic-events
+git clone https://github.com/yourusername/earnings-calendar-to-google-calendar.git
+cd earnings-calendar-to-google-calendar
 ```
 
 2. Create and activate a virtual environment:
 ```bash
-python -m venv calapp
-source calapp/bin/activate  # On Windows use: calapp\Scripts\activate
+python -m venv yourenvname
+source yourenvname/bin/activate  # On Windows use: yourenvname\Scripts\activate
 ```
 
 3. Install dependencies:
@@ -61,11 +60,9 @@ python manage.py runserver
 
 ## Usage
 
-1. Log in to the application
-2. Configure your Alpha Vantage API settings
-3. Authorize Google Calendar access
-4. Select the financial events you want to track
-5. Sync events to your calendar
+1. Visit Site
+2. Fetch the earnings events you want to track
+5. Sync events to your Google Calendar
 
 ## Contributing
 
