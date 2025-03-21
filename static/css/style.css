@@ -1,0 +1,166 @@
+/* Main styles for the Earnings Calendar application */
+
+:root {
+    --primary-green: #2e7d32;
+    --primary-green-light: #4caf50;
+    --primary-green-dark: #1b5e20;
+    --secondary-green: #81c784;
+    --accent-green: #a5d6a7;
+    --bg-light: #f1f8e9;
+    --bg-dark: #e8f5e9;
+    --text-dark: #1b5e20;
+    --text-light: #4caf50;
+    --border-color: #c8e6c9;
+}
+
+/* Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+main {
+    flex: 1;
+}
+
+/* Footer */
+.footer {
+    margin-top: auto;
+    padding: 1rem 0;
+    background-color: var(--bg-dark);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--bg-dark) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--primary-green) !important;
+}
+
+.nav-link {
+    color: var(--text-dark) !important;
+}
+
+.nav-link:hover {
+    color: var(--primary-green-light) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-green-dark);
+    border-color: var(--primary-green-dark);
+}
+
+.btn-danger {
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.btn-danger:hover {
+    background-color: #b71c1c;
+    border-color: #b71c1c;
+}
+
+/* Feedback message area */
+#feedbackArea {
+    transition: opacity 0.3s ease-in-out;
+}
+
+#feedbackArea.d-none {
+    opacity: 0;
+}
+
+.alert-success {
+    background-color: var(--accent-green);
+    border-color: var(--secondary-green);
+    color: var(--text-dark);
+}
+
+.alert-danger {
+    background-color: #ffcdd2;
+    border-color: #ef9a9a;
+    color: #b71c1c;
+}
+
+/* Event cards */
+.event-card {
+    transition: transform 0.3s;
+    background-color: white;
+    border: 1px solid var(--border-color);
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(46, 125, 50, 0.1);
+}
+
+/* How It Works section */
+.row.py-4 .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.row.py-4 .card:hover {
+    transform: translateY(-8px);
+}
+
+/* Green box shadow for How It Works cards */
+.row.py-4 .col-md-4 .card {
+    box-shadow: 10px 20px 45px rgba(46, 125, 50, 0.2);
+    border: none;
+}
+
+.row.py-4 .col-md-4 .card:hover {
+    box-shadow: 10px 20px 45px rgba(46, 125, 50, 0.3);
+}
+
+/* Filter section */
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(46, 125, 50, 0.05);
+    background-color: white;
+}
+
+/* Form elements */
+.form-control:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25);
+}
+
+/* Loading states */
+.btn .spinner-border {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* Feature list */
+.list-group-item {
+    color: var(--text-dark);
+}
+
+/* Overrides for Bootstrap classes */
+body .text-success,
+.list-group-item .fas.fa-check-circle.text-success,
+.list-group .list-group-item .text-success {
+    color: var(--primary-green);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-4.text-md-end {
+        margin-top: 1rem;
+    }
+} 
