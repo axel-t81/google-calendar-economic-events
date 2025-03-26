@@ -26,10 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'event_list' %}">Events</a>
+                        <a class="nav-link" href="{% url 'event_list' %}">Step 1: Fetch</a>
                     </li>
                 </ul>
             </div>
@@ -60,6 +57,10 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <p>&copy; {% now "Y" %} Pacioli Bear Pty Ltd. ABN: 39 642 692 475</p>
+                    <p>
+                        Any Bugs found? Want to suggest a Feature, or provide Feedback? Please, reach out via email: <a href="mailto:{{ email_address }}">Contact</a>
+                        NEXT: ADD FORM (see 3rd party provider and Claude chat)
+                    </p>
                 </div>
             </div>
         </div>

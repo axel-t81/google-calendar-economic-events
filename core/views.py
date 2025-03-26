@@ -3,7 +3,9 @@ from .models import EconomicEvent
 
 
 def home(request):
-    return render(request, 'core/home.html')
+    return render(request, 'core/home.html', {
+        'email_address': 'kojrey@kojreycodes.com'
+    })
 
 
 def event_list(request):
@@ -16,5 +18,6 @@ def event_list(request):
     return render(request, 'core/event_list.html', {
         'events': events,
         'success_message': success_message,
-        'error_message': error_message
+        'error_message': error_message,
+        'email_address': 'kojrey@kojreycodes.com'
     })
