@@ -1,7 +1,7 @@
 import requests
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from io import StringIO
 from core.models import EconomicEvent
 
@@ -48,6 +48,9 @@ def fetch_earnings_events():
     """
     Fetch earnings events from Alpha Vantage's Earnings Calendar API.
     Only includes companies from the S&P 500 index.
+    
+    Note: AlphaVantage data appears to be one day earlier than actual events,
+    so we add one day to each date.
     """
     url = f"https://www.alphavantage.co/query?function=EARNINGS_CALENDAR&horizon=3month&apikey={ALPHA_VANTAGE_API_KEY}"
     
@@ -78,7 +81,10 @@ def fetch_earnings_events():
                     
                     # Parse the date
                     try:
-                        report_date = datetime.strptime(report_date_str, '%Y-%m-%d').date()
+                        # Parse original date from AlphaVantage
+                        original_date = datetime.strptime(report_date_str, '%Y-%m-%d').date()
+                        # Add one day to fix the off-by-one issue
+                        report_date = original_date + timedelta(days=1)
                     except ValueError:
                         # Skip if date is invalid
                         continue

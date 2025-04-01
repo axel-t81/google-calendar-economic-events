@@ -1,6 +1,9 @@
-# Environment variables
+# Environment variables and secrets
 .env
+.env.local
+.env.*.local
 env.py
+.secrets
 
 # Python
 __pycache__/
@@ -20,9 +23,16 @@ parts/
 sdist/
 var/
 wheels/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+*.manifest
+*.spec
+.coverage
+htmlcov/
+.pytest_cache/
 
 # Django
 *.log
@@ -31,18 +41,50 @@ db.sqlite3
 db.sqlite3-journal
 media/
 staticfiles/
+collected_static/
 
 # Virtual Environment
 venv/
 calapp/
 ENV/
+env/
+.env/
+.venv/
+env.bak/
+venv.bak/
 
-# IDE
+# IDE related
 .idea/
 .vscode/
 *.swp
 *.swo
+*~
+.project
+.pydevproject
+.settings/
+.sublime-workspace
+.sublime-project
+.spyderproject
+.spyproject
+.ropeproject
 
-# OS
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+
+# Google OAuth related
+client_secret*.json
+credentials*.json
+token*.json
+*.pickle
+
+# Backup files
+*.bak
+*.tmp
+*.temp
+*~
