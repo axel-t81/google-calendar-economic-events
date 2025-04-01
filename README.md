@@ -2,6 +2,14 @@
 
 A Django application that fetches Earnings events from an API and syncs them with Google Calendar.
 
+### Temporary Working Notes
+1. Need to add Contact Form
+2. Need to fix off-by-one date error
+3. Need to fix Download .ics UI
+4. Need to rearrange columns
+5. Need to add disclaimers and issues with final date variability
+
+
 ## Features
 
 - Fetch Earnings events from API
